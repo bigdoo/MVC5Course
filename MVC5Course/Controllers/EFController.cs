@@ -22,27 +22,8 @@ namespace MVC5Course.Controllers
                 Active = true
             };
 
-            db.Product.Add(product);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                #region exception checking
-                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                {
-                    string entityName = item.Entry.Entity.GetType().Name;
-
-                    foreach (DbValidationError err in item.ValidationErrors)
-                    {
-                        throw new Exception(entityName + " 類型驗證失敗: " + err.ErrorMessage);
-                    }
-                }
-                throw; 
-                #endregion
-            }
+            //db.Product.Add(product);
+            //SaveChanges();
 
             var pkey = product.ProductId;
 
@@ -55,9 +36,30 @@ namespace MVC5Course.Controllers
                 item.Price = item.Price + 1;
             }
 
-            db.SaveChanges();
+            SaveChanges();
 
             return View(data);
+        }
+
+        private void SaveChanges()
+        {
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                {
+                    string entityName = item.Entry.Entity.GetType().Name;
+
+                    foreach (DbValidationError err in item.ValidationErrors)
+                    {
+                        throw new Exception(entityName + " 類型驗證失敗: " + err.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
 
         public ActionResult Detail(int id)
@@ -71,8 +73,22 @@ namespace MVC5Course.Controllers
 
         public ActionResult Delete(int id)
         {
-            var item = db.Product.Find(id);
-            db.Product.Remove(item);
+            var product = db.Product.Find(id);
+
+            //foreach (var ol in db.OrderLine.Where(p => p.ProductId == id).ToList())
+            //{
+            //    db.OrderLine.Remove(ol);
+            //}
+
+            //foreach (var ol in product.OrderLine.ToList())
+            //{
+            //    db.OrderLine.Remove(ol);
+            //}
+
+            db.OrderLine.RemoveRange(product.OrderLine);
+
+            db.Product.Remove(product);
+
             db.SaveChanges();
 
             return RedirectToAction("Index");

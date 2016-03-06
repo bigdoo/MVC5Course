@@ -24,7 +24,7 @@ namespace MVC5Course.Models
         [Required]
         public string ProductName { get; set; }
         [Required]
-        [Range(2, 99, ErrorMessage ="商品價格必須介於 2 ~ 99 之間")]
+        //[Range(2, 99, ErrorMessage ="商品價格必須介於 2 ~ 99 之間")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public Nullable<decimal> Price { get; set; }
         [Required]
