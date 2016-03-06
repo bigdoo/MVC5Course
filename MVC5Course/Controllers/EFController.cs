@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace MVC5Course.Controllers
 {
@@ -101,6 +102,21 @@ namespace MVC5Course.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult QueryPlan(int num = 10)
+        {
+            var data = db.Product
+                .Include(t => t.OrderLine)
+                .OrderBy(p => p.ProductId)
+                .AsQueryable();
+
+            //    var data = db.Database.SqlQuery<Product>(@"
+            //                  SELECT * 
+            //                  FROM dbo.Product p 
+            //                  WHERE p.ProductId < @p0", num);
+
+            return View(data);
         }
     }
 }

@@ -299,8 +299,8 @@
           <Property Name="ProductName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="4" />
           <Property Name="Active" Type="Boolean" />
-          <Property Name="Stock" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="OrderLine" Relationship="FabricsModel.fk_OrderLine_ProductId" FromRole="Product" ToRole="OrderLine" />
+          <Property Name="Stock" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <Association Name="fk_OrderLine_ProductId">
           <End Type="FabricsModel.Product" Role="Product" Multiplicity="1" />
