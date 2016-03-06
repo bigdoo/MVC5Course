@@ -30,6 +30,7 @@ namespace MVC5Course.Controllers
             }
             catch (DbEntityValidationException ex)
             {
+                #region exception checking
                 foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
                 {
                     string entityName = item.Entry.Entity.GetType().Name;
@@ -39,14 +40,22 @@ namespace MVC5Course.Controllers
                         throw new Exception(entityName + " 類型驗證失敗: " + err.ErrorMessage);
                     }
                 }
-                throw;
+                throw; 
+                #endregion
             }
 
             var pkey = product.ProductId;
 
             //var data = db.Product.Where(p => p.ProductId == pkey).ToList();
 
-            var data = db.Product.OrderByDescending(p => p.ProductId);
+            var data = db.Product.OrderByDescending(p => p.ProductId).Take(5);
+
+            foreach (var item in data)
+            {
+                item.Price = item.Price + 1;
+            }
+
+            db.SaveChanges();
 
             return View(data);
         }
@@ -58,6 +67,15 @@ namespace MVC5Course.Controllers
             var data = db.Product.FirstOrDefault(p => p.ProductId == id);
 
             return View(data);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var item = db.Product.Find(id);
+            db.Product.Remove(item);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
