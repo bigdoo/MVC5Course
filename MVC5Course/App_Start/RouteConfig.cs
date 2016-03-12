@@ -15,9 +15,8 @@ namespace MVC5Course
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}.php/{id}",
-                defaults: new { controller = "Home", action = "Index",
-                    id = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
