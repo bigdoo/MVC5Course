@@ -19,6 +19,9 @@ namespace MVC5Course.Controllers
         {
             var data = repo.All();
             //var data = repo.Get超級複雜的資料集();
+
+            //var repoOL = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
+
             return View(data);
         }
 
