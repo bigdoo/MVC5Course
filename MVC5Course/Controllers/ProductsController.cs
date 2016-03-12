@@ -15,12 +15,27 @@ namespace MVC5Course.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var data = repo.All();
+            var data = repo.All().Take(5);
             //var data = repo.Get超級複雜的資料集();
 
             //var repoOL = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
 
             return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult Index(IList<Product> data)
+        {
+            foreach (var item in data)
+            {
+                var product = repo.Find(item.ProductId);
+                product.Stock = item.Stock;
+                product.Price = item.Price;
+            }
+
+            repo.UnitOfWork.Commit();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Details/5
