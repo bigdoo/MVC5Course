@@ -7,7 +7,7 @@
 
 <div ng-app ng-controller="MainCtrl">
 
-    <button ng-click="get()">取得 JsonTest 資料</button>
+    <button id="btnJsonTest"">取得 JsonTest 資料</button>
     <hr />
 
     @* table.table>tr*2>td*5 *@
@@ -38,7 +38,7 @@
 
     function MainCtrl($http, $scope) {
         $scope.get = function () {
-            $http.get('/AR/JsonTest').then(function (result) {
+            $http.post('/AR/JsonTest', '').then(function (result) {
                 //console.log(result.data);
 
                 $scope.data = result.data;
