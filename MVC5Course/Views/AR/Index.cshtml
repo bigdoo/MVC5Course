@@ -7,7 +7,8 @@
 
 <div ng-app ng-controller="MainCtrl">
 
-    <button id="btnJsonTest"">取得 JsonTest 資料</button>
+    <button ng-click="get()">取得 JsonTest 資料 (AngularJS)</button>
+    <button id="btnJsonTest">取得 JsonTest 資料 (jQuery)</button>
     <hr />
 
     @* table.table>tr*2>td*5 *@
@@ -38,6 +39,7 @@
 
     function MainCtrl($http, $scope) {
         $scope.get = function () {
+            $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             $http.post('/AR/JsonTest', '').then(function (result) {
                 //console.log(result.data);
 
