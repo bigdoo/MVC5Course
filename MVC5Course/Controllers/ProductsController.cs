@@ -107,10 +107,9 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, FormCollection form)
         {
-            Product product = repo.Find(id);
+            IProduct product = repo.Find(id);
 
-            if (TryUpdateModel<Product>(product, new string[] {
-                "ProductId","ProductName","Price","Active","Stock" }))
+            if (TryUpdateModel<IProduct>(product))
             {
                 repo.UnitOfWork.Commit();
 
