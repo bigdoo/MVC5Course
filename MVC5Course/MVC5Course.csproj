@@ -318,6 +318,7 @@
     <Content Include="Content\alphago-logo.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\star.png" />
     <Content Include="favicon.ico" />
     <Content Include="file-manager.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1202,6 +1203,8 @@
     <Content Include="Views\Clients\Edit.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\性別.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CreditRating.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
