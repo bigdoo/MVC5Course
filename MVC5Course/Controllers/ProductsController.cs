@@ -13,10 +13,20 @@ namespace MVC5Course.Controllers
     public class ProductsController : BaseController
     {
         // GET: Products
-        public ActionResult Index(int? ProductId, string type)
+        public ActionResult Index(int? ProductId, string type, bool? isActive)
         {
-            var data = repo.All().Take(5);
+            var data = repo.All(true);
             //var data = repo.Get超級複雜的資料集();
+
+            if (isActive.HasValue)
+            {
+                data = data.Where(p => p.Active.HasValue && p.Active.Value == isActive.Value);
+            }
+
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Value = "true", Text = "有效" });
+            items.Add(new SelectListItem() { Value = "false", Text = "無效" });
+            ViewData["isActive"] = new SelectList(items, "Value", "Text");
 
             //var repoOL = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
 
