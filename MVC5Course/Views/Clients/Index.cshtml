@@ -83,7 +83,7 @@
                 @Html.DisplayFor(modelItem => item.CreditRating)
             </td>
             <td>
-                @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId },
+                @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId, pageNo = ViewData.ModelState["pageNo"].Value.AttemptedValue },
                 CommonAjaxOptions) |
                 @Ajax.ActionLink("Details", "Details", new { id = item.ClientId },
                 CommonAjaxOptions) |

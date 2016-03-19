@@ -66,7 +66,7 @@ namespace MVC5Course.Controllers
         }
 
         // GET: Clients/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int pageNo = 1)
         {
             if (id == null)
             {
@@ -77,6 +77,9 @@ namespace MVC5Course.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.pageNo = pageNo;
+
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
             return View(client);
         }
@@ -86,16 +89,14 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Client client)
+        public ActionResult Edit([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Client client, int pageNo = 1)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(client).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return View("Index", db.Client.Include(c => c.Occupation).Take(5));
-
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index", new { pageNo = pageNo });
 
             }
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
