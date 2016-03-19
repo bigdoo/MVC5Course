@@ -21,6 +21,13 @@
     };
 }
 
+@if (TempData["Msg"] != null)
+{
+    <script>
+        alert('@Ajax.JavaScriptStringEncode(Convert.ToString(TempData["Msg"]))');
+    </script>
+}
+
 @section Scripts {
     <script>
         function ajaxSuccess() {
@@ -83,7 +90,11 @@
                 @Html.DisplayFor(modelItem => item.CreditRating)
             </td>
             <td>
-                @Ajax.ActionLink("Edit", "Edit", new { id = item.ClientId, pageNo = ViewData.ModelState["pageNo"].Value.AttemptedValue },
+                @Ajax.ActionLink("Edit", "Edit", new
+                   {
+                       id = item.ClientId,
+                       pageNo = (int)ViewBag.pageNo
+                   },
                 CommonAjaxOptions) |
                 @Ajax.ActionLink("Details", "Details", new { id = item.ClientId },
                 CommonAjaxOptions) |
