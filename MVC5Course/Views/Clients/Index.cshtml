@@ -36,7 +36,7 @@
     <img id="loading" src="~/Content/ajax-loader.gif" style="display: none" />
 </p>
 
-@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("#main"))
 
 <table class="table">
     <tr>
@@ -95,9 +95,6 @@
 
 </table>
 
-@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }))
-
+@Html.PagedListPager(data, p => Url.Action("Index", new { pageNo = p }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("#main"))
 
 <div id="Details"></div>
-
-
