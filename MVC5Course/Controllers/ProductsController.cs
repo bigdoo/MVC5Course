@@ -13,7 +13,7 @@ namespace MVC5Course.Controllers
     public class ProductsController : BaseController
     {
         // GET: Products
-        public ActionResult Index(int? ProductId, string type, bool? isActive)
+        public ActionResult Index(int? ProductId, string type, bool? isActive, string keyword)
         {
             var data = repo.All(true);
             //var data = repo.Get超級複雜的資料集();
@@ -21,6 +21,11 @@ namespace MVC5Course.Controllers
             if (isActive.HasValue)
             {
                 data = data.Where(p => p.Active.HasValue && p.Active.Value == isActive.Value);
+            }
+
+            if (!String.IsNullOrEmpty(keyword))
+            {
+                data = data.Where(p => p.ProductName.Contains(keyword));
             }
 
             var items = new List<SelectListItem>();
@@ -37,7 +42,7 @@ namespace MVC5Course.Controllers
                 ViewBag.SelectedProductId = ProductId.Value;
             }
 
-            return View(data);
+            return View(data.Take(5));
         }
 
         [HttpPost]
