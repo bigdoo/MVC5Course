@@ -18,13 +18,18 @@ namespace MVC5Course.Controllers
 
         public ProductApiController()
         {
-            db.Configuration.LazyLoadingEnabled = false;
+            //db.Configuration.LazyLoadingEnabled = false;
         }
 
         // GET: api/ProductApi
-        public IQueryable<Product> GetProduct()
+        public IQueryable<ProductApiViewModel> GetProduct()
         {
-            return db.Product;
+            return from p in db.Product
+                   select new ProductApiViewModel()
+                   {
+                       id = p.ProductId,
+                       name = p.ProductName
+                   };
         }
 
         // GET: api/ProductApi/5
@@ -117,7 +122,7 @@ namespace MVC5Course.Controllers
 
         private bool ProductExists(int id)
         {
-            return db.Product.Count(e => e.ProductId == id) > 0;
+            return db.Product.Any(e => e.ProductId == id);
         }
     }
 }
